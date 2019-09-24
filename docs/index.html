@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+<title>Rock, Paper, Scissor!</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" href="assets/css/reset.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="row">
+        <h1 class="offset-lg-3 col-lg-6">Rock, Paper, Scissors, With friends!</h1>
+    </div class="container">
+        <div class="offset-lg-4 col-lg-4" >
+            <div class="row">
+                <h3 class="col-lg-12">Choose your Player</h3>
+                <button class="mr-5">Player 1</button>
+                <button class="ml-5">Player 2</button>
+            </div>
+            <div class="row">
+                <div id="p1info" class="mr-5">
+                    <h4>Player 1</h4>
+                    <h5 id="p1Wins">Wins: </h5>
+                    <h5 id="p1losses">Losses: </h5>
+                    <h5 id="playerTies">Ties: </h5>
+                    <h5>Player 1 selected</h5>
+                    <div id="p1Image"></div>
+                </div>
+                <div id="p2info" class="ml-5">
+                    <h4>Player 2</h4>
+                    <h5 id="p2Wins">Wins: </h5>
+                    <h5 id="p2losses">Losses: </h5>
+                    <h5 id="playerTies">Ties: </h5>
+                    <h5>Player 2 selected</h5>
+                    <div id="p2Image"></div>
+                </div>
+            </div>
+        </div>
+    <div>
+
+    </div>
+
+
+    <script src="assets/javascript/logic.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-analytics.js"></script>
+​
+</body>
+</html>
