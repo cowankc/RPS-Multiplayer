@@ -15,23 +15,23 @@
         <div class="offset-lg-4 col-lg-4" >
             <div class="row">
                 <h3 class="col-lg-12">Choose your Player</h3>
-                <button class="mr-5">Player 1</button>
-                <button class="ml-5">Player 2</button>
+                <button class="mr-5" id="p1">Player 1</button>
+                <button class="ml-5" id="p2">Player 2</button>
             </div>
             <div class="row">
-                <div id="p1info" class="mr-5">
+                <div id="p1Info" class="mr-5">
                     <h4>Player 1</h4>
-                    <h5 id="p1Wins">Wins: </h5>
-                    <h5 id="p1losses">Losses: </h5>
-                    <h5 id="playerTies">Ties: </h5>
+                    <h5>Wins: </h5><h5 id="p1Wins"></h5>
+                    <h5>Loses: </h5><h5 id="p1Loses"></h5>
+                    <h5>Ties: </h5><h5 id="player1Ties"></h5>
                     <h5>Player 1 selected</h5>
                     <div id="p1Image"></div>
                 </div>
-                <div id="p2info" class="ml-5">
+                <div id="p2Info" class="ml-5">
                     <h4>Player 2</h4>
-                    <h5 id="p2Wins">Wins: </h5>
-                    <h5 id="p2losses">Losses: </h5>
-                    <h5 id="playerTies">Ties: </h5>
+                    <h5>Wins: </h5><h5 id="p2Wins"> </h5>
+                    <h5>Loses: </h5><h5  id="p2Loses"></h5>
+                    <h5>Ties: </h5><h5 id="player2Ties"> </h5>
                     <h5>Player 2 selected</h5>
                     <div id="p2Image"></div>
                 </div>
@@ -40,11 +40,14 @@
     <div>
 
     </div>
-
-
+    
     <script src="assets/javascript/logic.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    
+    
+
+
 ​
 </body>
 </html>
