@@ -14,12 +14,20 @@
     </div class="container">
         <div class="offset-lg-4 col-lg-4" >
             <div class="row">
-            <form>
-                <div class="form-group">
-                    <label for="playerNames">Your Name</label>
-                    <input type="text" class="form-control" id="inputName" placeholder="Name">
-                </div> 
-            </form>   
+                <form id="p1Form">
+                    <div class="form-group">
+                        <label for="player1Name">Player 1 Name</label>
+                        <input type="text" class="form-control" id="inputP1Name" placeholder="Name">
+                    </div> 
+                    <button type="submit" id="p1Submit" class="btn btn-primary">Submit</button>
+                </form>   
+                <form  id="p2Form">
+                    <div class="form-group">
+                        <label for="player2Name">Player 2 Name:</label>
+                        <input type="text" class="form-control" id="inputP2Name" placeholder="Name">
+                    </div> 
+                    <button type="submit" id="p2Submit" class="btn btn-primary">Submit</button>
+                </form>   
             </div>
             <div class="row">
                 <div id="p1Info" class="mr-5">
@@ -38,7 +46,10 @@
                     <h5>Player 2 selected</h5>
                     <div id="p2Image"></div>
                 </div>
-                <div class="row">
+                <div>
+                    <h3 id="alerts"></h3>
+                </div>
+                <!-- <div class="row">
                     <div>
                         <div id="messageDisplay"></div>
                     </div>
@@ -54,11 +65,8 @@
                             </div>
                         </div> 
                     </div>
-            </div>
+            </div> -->
         </div>
-    <div>
-
-    </div>
     
     <script src="assets/javascript/logic.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>

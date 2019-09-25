@@ -4,8 +4,24 @@ $(document).ready(function(){
     let player2 = null;
     let namePlayer1 = "";
     let namePlayer2 = "";
-    let p1Choice = "";
-    let p2Choice = "";
+    let p1Choice;
+    let p2Choice;
+    let p1WinCount = 0;
+    let p1LoseCount = 0;
+    let p2WinCount = 0;
+    let p2LoseCount = 0;
+    let ties = 0
+
+    let restart = function () {
+        p1WinCount = 0;
+        p1LoseCount = 0;
+        p2WinCount = 0;
+        p2LoseCount = 0;
+        ties = 0
+        $("#messageDisplay").empty()
+        namePlayer1 = ""
+        namePlayer2 = ""
+    }
 
 
     let firebaseConfig = {
@@ -23,57 +39,127 @@ $(document).ready(function(){
     firebase.initializeApp(firebaseConfig);
 
     let database = firebase.database()
-    
-    database.ref().on("value", function(snapshot) {
+
+    //allow users to enter name
+    $("#p1Submit").on("click", function(event){
+        event.preventDefault();
+        if ( ($("#inputP1Name").val().trim() !== "") && (!player1 && !player2) ) {
+            if (player1 === null) {
+                namePlayer1 = $("#inputP1Name").val().trim();
+                player1 = {
+                    name: namePlayer1,
+                };
+                $("#p1Wins").text(p1WinCount);
+                $("#p1Loses").text(p1LoseCount);
+                $("#player1Ties").text(ties);
+                $("#p2Wins").text(p2WinCount);
+                $("#p2Loses").text(p2LoseCount);
+                $("#player2Ties").text(ties);
+                $("#p1Info").append("<button id='rock1'>Rock</button>")
+                $("#p1Info").append("<button id='paper1'>Paper</button>")
+                $("#p1Info").append("<button id='scissor1'>Scissor</button>")
+                $("#alerts").text("Waiting for Player 2")
+                database.ref().child("/users/player1").set(player1);
+                database.ref("/users/player1").onDisconnect().remove();
+            }
+            
+        }
+        $("#rock1").on("click", function() {
+            console.log("yes")
+            p1Choice = "<img src='../image/rock.png'>"
+            $("#paper1").remove()
+            $("#scissor1").remove()
+            $("#alerts").text("Waiting for " + namePlayer2)
+        })
+        $("#paper1").on("click", function() {
+            p1Choice = "<img src='../image/paper.jpg'>"
+            $("#rock1").remove()
+            $("#scissor1").remove()
+            $("#alerts").text("Waiting for " + namePlayer2)
+        })
+        $("#scissor1").on("click", function() {
+            p1Choice = "<img src='../image/scissor.jpg'>"
+            $("#rock1").remove()
+            $("#paper1").remove()
+            $("#alerts").text("Waiting for " + namePlayer2)
+        })
+    })
+    $("#p2Submit").on("click", function(event){
+        event.preventDefault();
+        if ( ($("#inputP2Name").val().trim() !== "") && (player1 && !player2) ) {
+            if( (player1 !== null) && (player2 === null) ) {
+                namePlayer2 = $("#inputP2Name").val().trim();
+                player2 = {
+                    name: namePlayer2,
+                };
+                $("#p2Wins").text(p2WinCount);
+                $("#p2Loses").text(p2LoseCount);
+                $("#player2Ties").text(ties);
+                $("#p1Wins").text(p1WinCount);
+                $("#p1Loses").text(p1LoseCount);
+                $("#player1Ties").text(ties);
+                $("#p2Info").append("<button id='rock2'>Rock</button>")
+                $("#p2Info").append("<button id='paper2'>Paper</button>")
+                $("#p2Info").append("<button id='scissor2'>Scissor</button>")
+                database.ref().child("/users/player2").set(player2);
+                database.ref("/users/player2").onDisconnect().remove();
+              }
+            }
+            $("#rock2").on("click", function() {
+                p2Choice = "<img src='../image/rock.png'>"
+                $("#paper2").remove()
+                $("#scissor2").remove()
+                $("p1Image").append(p1Choice)
+                $("p2Image").append(p2Choice)
+            })
+            $("#paper2").on("click", function() {
+                p2Choice = "<img src='../image/paper.jpg'>"
+                $("#rock2").remove()
+                $("#scissor2").remove()
+                $("p1Image").append(p1Choice)
+                $("p2Image").append(p2Choice)
+            })
+            $("#scissor2").on("click", function() {
+                p2Choice = "<img src='../image/scissor.jpg'>"
+                $("#rock2").remove()
+                $("#paper2").remove()
+                $("p1Image").append(p1Choice)
+                $("p2Image").append(p2Choice)
+            })
+        })
+    //assign users to firebase 
+    database.ref("/users/").on("value", function(snapshot) {
+        if (snapshot.child("player1").exists()) {
         player1 = snapshot.val().player1;
         namePlayer1 = player1.name
         $("#p1Name").text(namePlayer1)
+        }
+        else {
+            player1 = null;
+            namePlayer1 = "";
+        }
 
+        if (snapshot.child("player2").exists()) {
         player2 = snapshot.val().player2;
         namePlayer2 = player2.name
         $("#p2Name").text(namePlayer2)
-
-        if (player1 && player2) {
-            
+        }
+        else {
+            player2 = null;
+            nameplayer2 = "";
         }
 
-
-        // let p1WinCount = 0;
-        // let p1LoseCount = 0;
-        // let p2WinCount = 0;
-        // let p2LoseCount = 0;
-        // let ties = 0
-        
-        // $("#p1Wins").text(p1WinCount);
-        // $("#p1Loses").text(p1LoseCount);
-        // $("#player1Ties").text(ties);
-        // $("#p2Wins").text(p2WinCount);
-        // $("#p2Loses").text(p2LoseCount);
-        // $("#player2Ties").text(ties);
-
-        // $("#p1").on("click", function() {
-        //     let rockBtn = "<button id='rock1'>Rock</button>"
-        //     let paperBtn = "<button id='paper1'>Paper</button>"
-        //     let scissorBtn = "<button id='scissor1'>Scissor</button>"
-        //     $("#p1Info").append(rockBtn)
-        //     $("#p1Info").append(paperBtn)
-        //     $("#p1Info").append(scissorBtn)
-        //     $("#p1").remove()
-        //     player1 = user1
-        // })
-        // $("#p2").on("click", function() {
-        //     let rockBtn = "<button id='rock2'>Rock</button>"
-        //     let paperBtn = "<button id='paper2'>Paper</button>"
-        //     let scissorBtn = "<button id='scissor2'>Scissor</button>"
-        //     $("#p2Info").append(rockBtn)
-        //     $("#p2Info").append(paperBtn)
-        //     $("#p2Info").append(scissorBtn)
-        //     $("#p2").remove()
-        //     player2 = user2 
-        // })
-        
-        
+        if (player1 && player2) {
+            $("#alerts").text(namePlayer1 + "'s turn, please select your choice")
+        }
+        if (!player1 && !player2) {
+            restart();
+        }        
     });
+
+    
+    
+
 
 });
 
