@@ -10,27 +10,27 @@
 </head>
 <body>
     <div class="row">
-        <h1 class="offset-lg-3 col-lg-6">Rock, Paper, Scissors, With friends!</h1>
+        <h1 class="offset-lg-3 col-lg-6 border border-primary text-center" id="top">Rock, Paper, Scissors, With friends!</h1>
     </div class="container">
         <div class="offset-lg-4 col-lg-4" >
             <div class="row">
-                <form id="p1Form">
+                <form id="p1Form" class="border border-primary mr-3 p-2">
                     <div class="form-group">
                         <label for="player1Name">Player 1 Name</label>
                         <input type="text" class="form-control" id="inputP1Name" placeholder="Name">
                     </div> 
                     <button type="submit" id="p1Submit" class="btn btn-primary">Submit</button>
                 </form>   
-                <form  id="p2Form">
+                <!-- <form  id="p2Form" class="border border-primary ml-3 p-2">
                     <div class="form-group">
                         <label for="player2Name">Player 2 Name:</label>
                         <input type="text" class="form-control" id="inputP2Name" placeholder="Name">
                     </div> 
                     <button type="submit" id="p2Submit" class="btn btn-primary">Submit</button>
-                </form>   
+                </form>    -->
             </div>
             <div class="row">
-                <div id="p1Info" class="mr-5">
+                <div id="p1Info" class="m-3 p-3 border border-primary">
                     <h4 id="p1Name">Player 1</h4>
                     <h5>Wins: </h5><h5 id="p1Wins"></h5>
                     <h5>Loses: </h5><h5 id="p1Loses"></h5>
@@ -38,7 +38,7 @@
                     <h5>Player 1 selected</h5>
                     <div id="p1Image"></div>
                 </div>
-                <div id="p2Info" class="ml-5">
+                <div id="p2Info" class="m-3 p-3 border border-primary">
                     <h4 id="p2Name">Player 2</h4>
                     <h5>Wins: </h5><h5 id="p2Wins"> </h5>
                     <h5>Loses: </h5><h5  id="p2Loses"></h5>
