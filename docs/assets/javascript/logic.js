@@ -15,6 +15,7 @@ $(document).ready(function(){
     let paper = "<img src='assets/image/paper.jpg'>"
     let scissors = "<img src='assets/image/scissor.jpg'>"
 
+ 
     let restart = function () {
         p1WinCount = 0;
         p1LoseCount = 0;
@@ -28,11 +29,25 @@ $(document).ready(function(){
 
     let p1Winner = function (){
         p1WinCount++
-        $("#p1Wins").text(p1WinCount);
         p2LoseCount++
-        $("#p2Loses").text(p2LoseCount);
+        database.ref().child("/users/player1/wins").set(p1WinCount)
+        database.ref().child("/users/player2/loses").set(p2LoseCount)
         database.ref().child("/users/message/").set(namePlayer1 + " Wins!")
-        console.log(p1WinCount)
+    }
+
+    let p2Winner = function (){
+        p2WinCount++
+        p1LoseCount++
+        database.ref().child("/users/player2/wins").set(p2WinCount)
+        database.ref().child("/users/player1/loses").set(p1LoseCount)
+        database.ref().child("/users/message/").set(namePlayer2 + " Wins!")
+    }
+
+    let tie = function (){
+        ties++
+        database.ref().child("/users/player2/ties").set(ties)
+        database.ref().child("/users/player1/ties").set(ties)
+        database.ref().child("/users/message/").set("It's A Tie!")
     }
 
     let firebaseConfig = {
@@ -132,9 +147,22 @@ $(document).ready(function(){
                 $("#rock2").remove()
                 $("#scissor2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
+                // if (p1Choice == paper) {
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     p1Winner()
+                // }
+                // if (p1Choice == scissors){
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     p2Winner()
+                // }
+                // if (p1Choice == rock){
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     tie()
+                // }
                
-                
-                
             })
             $("#paper2").on("click", function() {
                 p2Choice = paper
@@ -142,6 +170,21 @@ $(document).ready(function(){
                 $("#scissor2").remove()
                 $("#paper2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
+                // if (p1Choice == scissors) {
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     p1Winner()
+                // }
+                // if (p1Choice == rock){
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     p2Winner()
+                // }
+                // if (p1Choice == paper){
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     tie()
+                // }
                 
             })
             $("#scissor2").on("click", function() {
@@ -150,11 +193,24 @@ $(document).ready(function(){
                 $("#paper2").remove()
                 $("#scissor2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
+                if (database.ref().child("/users/player1/choice") = rock) {
+                    $("#p1Image").empty()
+                    $("#p2Image").empty()
+                    p1Winner()
+                }
+                if (database.ref().child("/users/player1/choice") = paper){
+                    $("#p1Image").empty()
+                    $("#p2Image").empty()
+                    p2Winner()
+                }
+                // if (p1Choice === scissors){
+                //     $("#p1Image").empty()
+                //     $("#p2Image").empty()
+                //     tie()
+                // }
             })
           
-            if(p1Choice === rock && p2Choice === scissors) {
-                p1Winner()
-            }
+            
         })
     //assign users to firebase 
     database.ref("/users/").on("value", function(snapshot) {
@@ -162,6 +218,7 @@ $(document).ready(function(){
         player1 = snapshot.val().player1;
         namePlayer1 = player1.name
         $("#p1Name").text(namePlayer1)
+        $("#p1Form").remove()
         }
         else {
             player1 = null;
@@ -173,7 +230,7 @@ $(document).ready(function(){
         namePlayer2 = player2.name
         $("#p2Name").text(namePlayer2)
         $("#p2Form").remove()
-        $("#p1Form").remove()
+
         }
         else {
             player2 = null;
@@ -187,7 +244,7 @@ $(document).ready(function(){
             restart();
         }     
         
-        
+    // firebase data storage and display
     });
     database.ref("users/player1/").on("value", function(snapshot){
         if (snapshot.child("choice").exists()) {
@@ -208,5 +265,42 @@ $(document).ready(function(){
         }
     })
     database.ref("/users/message").onDisconnect().remove();
+
+    database.ref("/users/player1/").on("value", function(snapshot){
+        if (snapshot.child("wins").exists()) {
+            p1Wins = snapshot.val().wins
+            $("#p1Wins").text(p1Wins)
+        }
+    })
+    database.ref("/users/player2/").on("value", function(snapshot){
+        if (snapshot.child("loses").exists()) {
+            p2Loses = snapshot.val().loses
+            $("#p2Loses").text(p2Loses)
+        }
+    })
+    database.ref("/users/player2/").on("value", function(snapshot){
+        if (snapshot.child("wins").exists()) {
+            p2Wins = snapshot.val().wins
+            $("#p2Wins").text(p2Wins)
+        }
+    })
+    database.ref("/users/player1/").on("value", function(snapshot){
+        if (snapshot.child("loses").exists()) {
+            p1Loses = snapshot.val().loses
+            $("#p1Loses").text(p1Loses)
+        }
+    })
+    database.ref("/users/player1/").on("value", function(snapshot){
+        if (snapshot.child("ties").exists()) {
+            p1ties = snapshot.val().ties
+            $("#player1Ties").text(p1ties)
+        }
+    })
+    database.ref("/users/player2/").on("value", function(snapshot){
+        if (snapshot.child("ties").exists()) {
+            p2ties = snapshot.val().ties
+            $("#player2Ties").text(p2ties)
+        }
+    })
 });
 
