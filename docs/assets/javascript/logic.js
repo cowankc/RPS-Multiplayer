@@ -15,6 +15,7 @@ $(document).ready(function(){
     let rock = "<img src='assets/image/rock.png'>"
     let paper = "<img src='assets/image/paper.jpg'>"
     let scissors = "<img src='assets/image/scissor.jpg'>"
+    let chatmessage
 
  
     let restart = function () {
@@ -245,6 +246,13 @@ $(document).ready(function(){
           
             
         })
+
+//    $("chatSubmit").on("click", function(event){
+//         event.preventDefault();
+//         chatmessage = $("#userMessage").val().trim();
+//         database.ref().child("/users/chat").set(chatmessage)
+        
+//     })
     //assign users to firebase 
     database.ref("/users/").on("value", function(snapshot) {
         if (snapshot.child("player1").exists()) {
@@ -334,9 +342,14 @@ $(document).ready(function(){
     database.ref("/users/player2/").on("value", function(snapshot){
         if (snapshot.child("ties").exists()) {
             p2ties = snapshot.val().ties
-            $("#player2Ties").text(p2ties)
-            
+            $("#player2Ties").text(p2ties) 
         }
     })
+    // database.ref("/users/").on("value", function(snapshot){
+    //     if (snapshot.child("chat").exists()) {
+    //         message1 = snapshot.val().ties
+    //         $("#messageDisplay").text(message1) 
+    //     }
+    // })
 });
 

@@ -7,3 +7,8 @@ img {
     font-size: 45px;
     font-family: 'Notable', sans-serif;
 }
+.messagebox {
+    height: 200px;
+    width: 300px;
+    border: blue 3px solid
+}
