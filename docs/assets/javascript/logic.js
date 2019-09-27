@@ -15,7 +15,7 @@ $(document).ready(function(){
     let rock = "<img src='assets/image/rock.png'>"
     let paper = "<img src='assets/image/paper.jpg'>"
     let scissors = "<img src='assets/image/scissor.jpg'>"
-    let chatmessage
+    // let chatmessage
 
  
     let restart = function () {
@@ -29,6 +29,8 @@ $(document).ready(function(){
         namePlayer2 = ""
     }
 
+
+    //functions to determin what happens based on outcomes
     let p1Winner = function (){
         p1WinCount++
         p2LoseCount++
@@ -68,6 +70,7 @@ $(document).ready(function(){
         database.ref().child("/users/message/").set(namePlayer1 + "'s turn")
     }
 
+    // logic of Rock paper scissors 
     let gameLogic = function () {
         console.log("running logic")
         console.log(p1Choice)
@@ -160,7 +163,7 @@ $(document).ready(function(){
 
     let database = firebase.database()
 
-    //allow users to enter name
+    //allow users to enter name and starts the game 
     $("#p1Submit").on("click", function(event){
         event.preventDefault();
         if ( ($("#inputP1Name").val().trim() !== "") && (!player1 && !player2) ) {
@@ -175,9 +178,9 @@ $(document).ready(function(){
                 $("#p2Wins").text(p2WinCount);
                 $("#p2Loses").text(p2LoseCount);
                 $("#player2Ties").text(ties);
-                $("#p1Info").append("<button id='rock1' class='text-white btn btn-warning m-2'>Rock</button>")
-                $("#p1Info").append("<button id='paper1' class='btn btn-danger m-2'>Paper</button>")
-                $("#p1Info").append("<button id='scissor1' class='btn btn-success m-2'>Scissor</button>")
+                $("#p1Info").append("<button id='rock1' class='text-white btn btn-warning m-1'>Rock</button>")
+                $("#p1Info").append("<button id='paper1' class='btn btn-danger m-1'>Paper</button>")
+                $("#p1Info").append("<button id='scissor1' class='btn btn-success m-1'>Scissor</button>")
                 $("#alerts").text("Waiting for Player 2")
                 database.ref().child("/users/player1").set(player1);
                 database.ref("/users/player1").onDisconnect().remove();
@@ -217,9 +220,9 @@ $(document).ready(function(){
                 $("#p1Wins").text(p1WinCount);
                 $("#p1Loses").text(p1LoseCount);
                 $("#player1Ties").text(ties);
-                $("#p2Info").append("<button id='rock2' class='text-white btn btn-warning m-2'>Rock</button>")
-                $("#p2Info").append("<button id='paper2' class='btn btn-danger m-2'>Paper</button>")
-                $("#p2Info").append("<button id='scissor2'class='btn btn-success m-2' >Scissor</button>")
+                $("#p2Info").append("<button id='rock2' class='text-white btn btn-warning m-1'>Rock</button>")
+                $("#p2Info").append("<button id='paper2' class='btn btn-danger m-1'>Paper</button>")
+                $("#p2Info").append("<button id='scissor2'class='btn btn-success m-1' >Scissor</button>")
                 database.ref().child("/users/player2").set(player2);
                 database.ref("/users/player2").onDisconnect().remove();
                 database.ref("/users/message").onDisconnect().remove();
@@ -253,6 +256,8 @@ $(document).ready(function(){
 //         database.ref().child("/users/chat").set(chatmessage)
         
 //     })
+
+    // firebase data storage and display
     //assign users to firebase 
     database.ref("/users/").on("value", function(snapshot) {
         if (snapshot.child("player1").exists()) {
@@ -285,7 +290,7 @@ $(document).ready(function(){
             restart();
         }     
         
-    // firebase data storage and display
+    //records the users choices
     });
     database.ref("users/player1/").on("value", function(snapshot){
         if (snapshot.child("choice").exists()) {
@@ -300,6 +305,8 @@ $(document).ready(function(){
             $("#p1Image").empty()
             $("#p1Image").append(databaseChoice1)
             }
+
+    //records the alerts for whose turn it is 
     })
     database.ref("/users/").on("value", function(snapshot){
         if (snapshot.child("message").exists()) {
@@ -309,6 +316,7 @@ $(document).ready(function(){
     })
     database.ref("/users/message").onDisconnect().remove();
 
+    //records the users wins, loses, and ties
     database.ref("/users/player1/").on("value", function(snapshot){
         if (snapshot.child("wins").exists()) {
             p1Wins = snapshot.val().wins

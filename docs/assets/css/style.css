@@ -10,5 +10,9 @@ img {
 .messagebox {
     height: 200px;
     width: 300px;
-    border: blue 3px solid
+    border: blue 3px solid;
+    background-color: whitesmoke
+}
+body {
+    background-color: lightgoldenrodyellow
 }
