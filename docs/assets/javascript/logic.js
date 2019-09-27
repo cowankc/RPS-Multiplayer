@@ -34,6 +34,10 @@ $(document).ready(function(){
         database.ref().child("/users/player1/wins").set(p1WinCount)
         database.ref().child("/users/player2/loses").set(p2LoseCount)
         database.ref().child("/users/message/").set(namePlayer1 + " Wins!")
+        setTimeout(function(){
+            database.ref().child("/users/player1/choice").set("")
+            database.ref().child("/users/player2/choice").set("")
+            }, 3000)
     }
 
     let p2Winner = function (){
@@ -42,6 +46,10 @@ $(document).ready(function(){
         database.ref().child("/users/player2/wins").set(p2WinCount)
         database.ref().child("/users/player1/loses").set(p1LoseCount)
         database.ref().child("/users/message/").set(namePlayer2 + " Wins!")
+        setTimeout(function(){
+            database.ref().child("/users/player1/choice").set("")
+            database.ref().child("/users/player2/choice").set("")
+            }, 3000)
     }
 
     let tie = function (){
@@ -49,57 +57,89 @@ $(document).ready(function(){
         database.ref().child("/users/player2/ties").set(ties)
         database.ref().child("/users/player1/ties").set(ties)
         database.ref().child("/users/message/").set("It's A Tie!")
+        setTimeout(function(){
+            database.ref().child("/users/player1/choice").set("")
+            database.ref().child("/users/player2/choice").set("")
+            }, 3000)
+    }
+
+    let newturn = function (){
+        database.ref().child("/users/message/").set(namePlayer1 + "'s turn")
     }
 
     let gameLogic = function () {
         console.log("running logic")
         console.log(p1Choice)
         console.log(p2Choice)
-        if (p2Choice === rock && p1Choice === paper) {
+        if (p2Choice === rock && databaseChoice1 === paper) {
             $("#p1Image").empty()
             $("#p2Image").empty()
             p1Winner()
             }
-        if (p2Choice === rock && p1Choice === scissors){
+        if (p2Choice === rock && databaseChoice1 === scissors){
             $("#p1Image").empty()
             $("#p2Image").empty()
             p2Winner()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === rock && databaseChoice1 === rock){
             $("#p1Image").empty()
             $("#p2Image").empty()
             tie()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === paper && databaseChoice1 === scissors) {
             console.log("yes")
             $("#p1Image").empty()
             $("#p2Image").empty()
             p1Winner()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === paper && databaseChoice1 === rock){
             $("#p1Image").empty()
             $("#p2Image").empty()
             p2Winner()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === paper && databaseChoice1 === paper){
             $("#p1Image").empty()
             $("#p2Image").empty()
              tie()
+             setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === scissors && databaseChoice1 === rock) {
             $("#p1Image").empty()
             $("#p2Image").empty()
             p1Winner()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === scissors && databaseChoice1 === paper){
             $("#p1Image").empty()
             $("#p2Image").empty()
             p2Winner()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
         if (p2Choice === scissors && databaseChoice1 === scissors){
             $("#p1Image").empty()
             $("#p2Image").empty()
             tie()
+            setTimeout(function(){
+                newturn()
+            }, 3000)
             }
     }
 
@@ -134,9 +174,9 @@ $(document).ready(function(){
                 $("#p2Wins").text(p2WinCount);
                 $("#p2Loses").text(p2LoseCount);
                 $("#player2Ties").text(ties);
-                $("#p1Info").append("<button id='rock1'>Rock</button>")
-                $("#p1Info").append("<button id='paper1'>Paper</button>")
-                $("#p1Info").append("<button id='scissor1'>Scissor</button>")
+                $("#p1Info").append("<button id='rock1' class='text-white btn btn-warning m-2'>Rock</button>")
+                $("#p1Info").append("<button id='paper1' class='btn btn-danger m-2'>Paper</button>")
+                $("#p1Info").append("<button id='scissor1' class='btn btn-success m-2'>Scissor</button>")
                 $("#alerts").text("Waiting for Player 2")
                 database.ref().child("/users/player1").set(player1);
                 database.ref("/users/player1").onDisconnect().remove();
@@ -145,29 +185,20 @@ $(document).ready(function(){
         }
         $("#rock1").on("click", function() {
             p1Choice = rock
-            $("#paper1").remove()
-            $("#scissor1").remove()
-            $("#rock1").remove()
             database.ref().child("/users/player1/choice").set(p1Choice)
-            database.ref().child("/users/message/").set(namePlayer2 + "'s turn, please select your choice")
+            database.ref().child("/users/message/").set(namePlayer2 + "'s turn")
 
         })
         $("#paper1").on("click", function() {
             p1Choice = paper
-            $("#rock1").remove()
-            $("#scissor1").remove()
-            $("#paper1").remove()
             database.ref().child("/users/player1/choice").set(p1Choice);
-            database.ref().child("/users/message/").set(namePlayer2 + "'s turn, please select your choice")
+            database.ref().child("/users/message/").set(namePlayer2 + "'s turn")
 
         })
         $("#scissor1").on("click", function() {
             p1Choice = scissors
-            $("#rock1").remove()
-            $("#paper1").remove()
-            $("#scissor1").remove()
             database.ref().child("/users/player1/choice").set(p1Choice);
-            database.ref().child("/users/message/").set(namePlayer2 + "'s turn, please select your choice")
+            database.ref().child("/users/message/").set(namePlayer2 + "'s turn")
         })
         
     })
@@ -185,9 +216,9 @@ $(document).ready(function(){
                 $("#p1Wins").text(p1WinCount);
                 $("#p1Loses").text(p1LoseCount);
                 $("#player1Ties").text(ties);
-                $("#p2Info").append("<button id='rock2'>Rock</button>")
-                $("#p2Info").append("<button id='paper2'>Paper</button>")
-                $("#p2Info").append("<button id='scissor2'>Scissor</button>")
+                $("#p2Info").append("<button id='rock2' class='text-white btn btn-warning m-2'>Rock</button>")
+                $("#p2Info").append("<button id='paper2' class='btn btn-danger m-2'>Paper</button>")
+                $("#p2Info").append("<button id='scissor2'class='btn btn-success m-2' >Scissor</button>")
                 database.ref().child("/users/player2").set(player2);
                 database.ref("/users/player2").onDisconnect().remove();
                 database.ref("/users/message").onDisconnect().remove();
@@ -196,27 +227,18 @@ $(document).ready(function(){
             
             $("#rock2").on("click", function() {
                 p2Choice = rock
-                $("#paper2").remove()
-                $("#rock2").remove()
-                $("#scissor2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
                 gameLogic ()
             })
             $("#paper2").on("click", function() {
                 p2Choice = paper
                 console.log(p2Choice)
-                $("#rock2").remove()
-                $("#scissor2").remove()
-                $("#paper2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
                 gameLogic ()
                 
             })
             $("#scissor2").on("click", function() {
                 p2Choice = scissors
-                $("#rock2").remove()
-                $("#paper2").remove()
-                $("#scissor2").remove()
                 database.ref().child("/users/player2/choice").set(p2Choice);
                 gameLogic ()
             })
@@ -249,7 +271,7 @@ $(document).ready(function(){
         }
 
         if (player1 && player2) {
-            $("#alerts").text(namePlayer1 + "'s turn, please select your choice")
+            $("#alerts").text(namePlayer1 + "'s turn")
         }
         if (!player1 && !player2) {
             restart();
@@ -265,7 +287,9 @@ $(document).ready(function(){
     database.ref("users/player2/").on("value", function(snapshot){
         if (snapshot.child("choice").exists()) {
             choice2 = snapshot.val().choice
+            $("#p2Image").empty()
             $("#p2Image").append(choice2)
+            $("#p1Image").empty()
             $("#p1Image").append(databaseChoice1)
             }
     })
